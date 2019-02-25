@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 
 // Added this to help read text files
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /*
@@ -197,9 +199,9 @@ public class StringStuff {
 						
 				}
 				
+				
 				// If the input string has any special characters...
 				//... Tell user there was an error
-				
 				
 				// Loop to get the answer
 				
