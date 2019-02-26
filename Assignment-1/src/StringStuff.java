@@ -136,12 +136,14 @@ public class StringStuff {
 				// !!!!!
 				// Do the Blowup String things
 				
-				// Variables
-				String originalLength = "";
+				// Local Variables
+				int originalLength;
+				int newLength;
 				boolean lastCharWasNumber = false;
 				int lastNumber = 0;
 				int index = 0;
-				char nextChar = 'a';
+				char nextChar;
+				int numOfTimesShouldPrint;
 				
 				// Disable Everything
 				btnIntMaxRun.setEnabled(false);
@@ -203,7 +205,30 @@ public class StringStuff {
 				// If the input string has any special characters...
 				//... Tell user there was an error
 				
+				char[] chars = inputString.toCharArray();
+				
+				originalLength = (chars.length);
+				System.out.println("This is the length: " + originalLength);
+				
 				// Loop to get the answer
+				for (int i = 0; i < originalLength; i++ )
+				{
+					// Read the first char in the array 
+					nextChar = inputString.charAt(i);
+					
+					// Was the last character a number
+					if (lastCharWasNumber == true)
+					{
+						
+						//Convert the number in the char list to an int
+						numOfTimesShouldPrint = Character.getNumericValue(nextChar);
+						
+						//// !! Loop to print nextChar the needed number of times
+						// Use the converted number as the 
+						
+						
+					}
+				}
 				
 				
 				
