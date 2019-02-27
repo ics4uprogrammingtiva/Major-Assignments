@@ -29,13 +29,13 @@ public class StringStuff {
 			// General variables
 			String answerString = "";
 			String inputString = "";
+			char nextChar;
 			boolean inputFromFile;
+			int originalLength = 0;
 			
 			// Blowup String Variables
-			int originalLength = 0;
 			int newLength = 0;
 			
-			// IntMaxRun Variables
 	        
 
 	private JFrame frame;
@@ -177,8 +177,6 @@ public class StringStuff {
 				int newLength;
 				boolean lastCharWasNumber = false;
 				int lastNumber = 0;
-				int index = 0;
-				char nextChar;
 				int numOfTimesShouldPrint;
 				
 				// Disable Everything
@@ -193,7 +191,7 @@ public class StringStuff {
 				if (inputFromFile == true)
 				{
 					// The name of the file to open.
-			        String inputFile = "input.txt";
+			        String inputFile = "inputBlowup.txt";
 	
 			        // This will reference one line at a time
 			        String line = null;
@@ -229,10 +227,12 @@ public class StringStuff {
 				}
 				else
 				{
-					txtInputFromBox.setEnabled(true);
+					txtInputFromBox.setEnabled(false);
 					txtInputFromBox.setVisible(true);
+					inputString = txtInputFromBox.getText();
+				}
 					
-					// If user didn't enter anything into the text field
+					/*// If user didn't enter anything into the text field
 					if (txtInputFromBox.getText().isEmpty())
 					{
 						lblError.setVisible(true);
@@ -241,7 +241,8 @@ public class StringStuff {
 					}
 					else
 					{
-						inputString = txtInputFromBox.getText();
+					*/
+
 						char[] chars = inputString.toCharArray();
 						
 						originalLength = (chars.length);
@@ -259,6 +260,11 @@ public class StringStuff {
 							{
 								lblError.setVisible(true);
 								lblError.setText("Sorry please restart program and enter valid input");
+								// And stop the program where it is
+								i = originalLength;
+								answerString = "Error";
+								
+								
 							}
 							
 							// TIME FOR THE REALLY COMPLICATED STUFF
@@ -312,7 +318,7 @@ public class StringStuff {
 									lastCharWasNumber = false;
 								}
 							}
-						}
+						//}
 						
 						// Get the new length and set labels to show both old and new length
 						newLength = answerString.length();
@@ -331,7 +337,7 @@ public class StringStuff {
 						
 						
 						// Name of file I am creating
-						String outputFile = "output.txt";
+						String outputFile = "outputBlowup.txt";
 						
 						try 
 						{
@@ -360,7 +366,7 @@ public class StringStuff {
 						// Make the answer show up as a label
 						lblAnswer.setText("Output: " + answerString);
 					}
-					}
+					
 						
 				}
 				
@@ -370,7 +376,7 @@ public class StringStuff {
 				
 				
 		});
-		btnBlowupString.setBounds(41, 141, 103, 23);
+		btnBlowupString.setBounds(41, 141, 138, 23);
 		frame.getContentPane().add(btnBlowupString);
 		
 		// I removed this next line so that it could be created...
@@ -379,9 +385,156 @@ public class StringStuff {
 		btnIntMaxRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Do Int MaxRun
-			}
+				
+				// Set Variables
+				int longestRun = 1;
+				int currentRun = 0;
+				char runChar;
+				
+				// Disable Everything
+				btnIntMaxRun.setEnabled(false);
+				btnBlowupString.setEnabled(false);
+				radInputFromBox.setEnabled(false);
+				radInputFromFile.setEnabled(false);
+				txtInputFromBox.setEnabled(false);
+				
+				// //If then statement to determine where to get input from
+				
+				if (inputFromFile == true)
+				{
+					// The name of the file to open.
+			        String inputFile = "inputMaxRun.txt";
+	
+			        // This will reference one line at a time
+			        String line = null;
+	
+			        try {
+			            // FileReader reads text files in the default encoding.
+			            FileReader fileReader = 
+			                new FileReader(inputFile);
+	
+			            // Always wrap FileReader in BufferedReader.
+			            BufferedReader bufferedReader = 
+			                new BufferedReader(fileReader);
+	
+			            while((line = bufferedReader.readLine()) != null) {
+			                System.out.println(line);
+			                inputString = line;
+			            }   
+	
+			            // Always close files.
+			            bufferedReader.close(); 
+			            
+			        }
+			        catch(FileNotFoundException ex) {
+			            System.out.println(
+			                "Unable to open file '" + 
+			                inputFile + "'");                
+			        }
+			        catch(IOException ex) {
+			            System.out.println(
+			                "Error reading file '" 
+			                + inputFile + "'");                  
+			        }
+				}
+				else
+				{
+					txtInputFromBox.setEnabled(false);
+					txtInputFromBox.setVisible(true);
+					
+					// Get the input from the textbox
+					inputString = txtInputFromBox.getText();
+				}
+						char[] chars = inputString.toCharArray();
+						
+						originalLength = (chars.length);
+						
+						// Read the first char in the array 
+						runChar = inputString.charAt(0);
+						
+						for (int i = 0; i < originalLength; i++ )
+						{
+							// Read the first char in the array 
+							nextChar = inputString.charAt(i);
+							
+							// If the input string has any special characters...
+							//... or numbers tell the user there was an error
+							if (!Character.isLetter(nextChar))
+							{
+								lblError.setVisible(true);
+								lblError.setText("Sorry please restart program and enter valid input");
+								// And stop the program where it is
+								i = originalLength;
+								answerString = "Error";
+								
+								
+							}
+							
+							//Determine if the current char is the same as the one that came before it
+							if (nextChar == runChar)
+							{
+								currentRun = (currentRun +1);
+								
+								// If longest run is shorter than current run then make the current run the longest run
+								if (longestRun < currentRun)
+								{
+									longestRun = (longestRun+1);
+								}
+								
+							}
+							else
+							{
+								runChar = nextChar;
+								
+								currentRun = 1;
+							}
+						}
+						
+						// Get answer 
+						answerString = Integer.toString(longestRun);
+						
+						// Show the answer label 
+						lblAnswer.setVisible(true);
+						
+						
+						// Print it in output file
+						// !!!!!!
+						
+						
+						// Name of file I am creating
+						String outputFile = "outputMaxRun.txt";
+						
+						try 
+						{
+							// Things to put in the output file
+							String bytes = answerString;
+							byte[] buffer = bytes.getBytes();
+							
+							FileOutputStream outputStream = 
+								new FileOutputStream(outputFile);
+							
+							// Put the things I want into the output file
+							outputStream.write(buffer);
+							
+							// Close the file
+							outputStream.close();
+							
+							System.out.println("Wrote " + buffer.length + " bytes");
+						}
+						catch(IOException ex) {
+							System.out.println(
+								"Error writing file '"
+								+ outputFile + "'");
+							
+						}
+						
+						// Show the answer in label
+						// Make the answer show up as a label
+						lblAnswer.setText("Output: " + answerString);
+				}
+			
 		});
-		btnIntMaxRun.setBounds(41, 204, 103, 23);
+		btnIntMaxRun.setBounds(41, 204, 138, 23);
 		frame.getContentPane().add(btnIntMaxRun);
 		
 		
