@@ -29,7 +29,7 @@ public class StringStuff {
 			// General variables
 			String answerString = "";
 			String inputString = "";
-			boolean inputFromFile = false;
+			boolean inputFromFile;
 			
 			// Blowup String Variables
 			int originalLength = 0;
@@ -100,21 +100,57 @@ public class StringStuff {
 		lblAnswer.setBounds(231, 47, 193, 14);
 		frame.getContentPane().add(lblAnswer);
 		
+		// I created this above where the rest of its code is because it needs to be referencd
+		JRadioButton radInputFromBox = new JRadioButton("Get Input From Text Box");
+		
 		JRadioButton radInputFromFile = new JRadioButton("Get Input From Text File");
-		radInputFromFile.setBounds(20, 43, 153, 23);
+		radInputFromFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// When it is selected set it to be selected
+				radInputFromFile.setSelected(true);
+				
+				// Set other rad button to not be selected 
+				radInputFromBox.setSelected(false);
+				// Set input from file to be true or false
+				inputFromFile = true;
+				
+				// Hide the text box if it was enabled 
+				txtInputFromBox.setEnabled(false);
+				txtInputFromBox.setVisible(false);
+			}
+		});
+		radInputFromFile.setBounds(20, 43, 193, 23);
 		frame.getContentPane().add(radInputFromFile);
 		
-		JRadioButton radInputFromBox = new JRadioButton("Get Input From Text Box");
-		radInputFromBox.setBounds(20, 81, 153, 23);
+		// I referenced this and created it above radInputFromFile
+		//JRadioButton radInputFromBox = new JRadioButton("Get Input From Text Box");
+		radInputFromBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// When it is selected set it to be selected
+				radInputFromBox.setSelected(true);
+				
+				// Set other rad button to not be selected 
+				radInputFromFile.setSelected(false);
+				// Set input from file to be true or false
+				inputFromFile = false;
+				
+				// Show the textBox So that user may enter something in it
+				txtInputFromBox.setEnabled(true);
+				txtInputFromBox.setVisible(true);
+			}
+		});
+		radInputFromBox.setBounds(20, 81, 175, 23);
 		frame.getContentPane().add(radInputFromBox);
+
 		
 		JLabel lblError = new JLabel("New label");
+		lblError.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblError.setHorizontalAlignment(SwingConstants.CENTER);
-		lblError.setBounds(10, 236, 414, 14);
+		lblError.setBounds(10, 233, 414, 17);
 		frame.getContentPane().add(lblError);
 		
 		txtInputFromBox = new JTextField();
-		txtInputFromBox.setBounds(179, 82, 86, 20);
+		txtInputFromBox.setBounds(201, 82, 86, 20);
 		frame.getContentPane().add(txtInputFromBox);
 		txtInputFromBox.setColumns(10);
 		txtInputFromBox.setVisible(false);
@@ -173,11 +209,12 @@ public class StringStuff {
 	
 			            while((line = bufferedReader.readLine()) != null) {
 			                System.out.println(line);
+			                inputString = line;
 			            }   
 	
 			            // Always close files.
 			            bufferedReader.close(); 
-			            inputString = line;
+			            
 			        }
 			        catch(FileNotFoundException ex) {
 			            System.out.println(
@@ -192,52 +229,146 @@ public class StringStuff {
 				}
 				else
 				{
-					txtInputFromBox.setVisible(true);
 					txtInputFromBox.setEnabled(true);
+					txtInputFromBox.setVisible(true);
 					
-					// Use a try catch in case the box is empty
-					
-					String inputString = txtInputFromBox.getText();
-						
-				}
-				
-				
-				// If the input string has any special characters...
-				//... Tell user there was an error
-				
-				char[] chars = inputString.toCharArray();
-				
-				originalLength = (chars.length);
-				System.out.println("This is the length: " + originalLength);
-				
-				// Loop to get the answer
-				for (int i = 0; i < originalLength; i++ )
-				{
-					// Read the first char in the array 
-					nextChar = inputString.charAt(i);
-					
-					// Was the last character a number
-					if (lastCharWasNumber == true)
+					// If user didn't enter anything into the text field
+					if (txtInputFromBox.getText().isEmpty())
 					{
-						
-						//Convert the number in the char list to an int
-						numOfTimesShouldPrint = Character.getNumericValue(nextChar);
-						
-						//// !! Loop to print nextChar the needed number of times
-						// Use the converted number as the 
-						
-						
+						lblError.setVisible(true);
+						lblError.setText("You did not enter anything into the text box please"
+								+ " restart program and enter a valid input");
 					}
+					else
+					{
+						inputString = txtInputFromBox.getText();
+						char[] chars = inputString.toCharArray();
+						
+						originalLength = (chars.length);
+						System.out.println("This is the length: " + originalLength);
+						
+						// Loop to get the answer
+						for (int i = 0; i < originalLength; i++ )
+						{
+							// Read the first char in the array 
+							nextChar = inputString.charAt(i);
+							
+							// If the input string has any special characters...
+							//... Tell user there was an error
+							if (!Character.isLetterOrDigit(nextChar))
+							{
+								lblError.setVisible(true);
+								lblError.setText("Sorry please restart program and enter valid input");
+							}
+							
+							// TIME FOR THE REALLY COMPLICATED STUFF
+							// Was the last character a number
+							if (lastCharWasNumber == true)
+							{
+								
+								//Convert the number from last time to an int
+								numOfTimesShouldPrint = Character.getNumericValue(lastNumber);
+								
+								//// !! Loop to print nextChar the needed number of times
+								// Use the converted number
+								for (int t = 0; t < numOfTimesShouldPrint +1; t++ )
+								{
+									answerString = (answerString + nextChar);
+								}
+								
+								// Turn off the last char was number thing
+								lastCharWasNumber = false;
+								
+								// Figure out if current char is a number
+								if (Character.isDigit(nextChar))
+								{
+									//Make last number equal to nextChar
+									lastNumber = nextChar;
+									
+									//Set it to be true
+									lastCharWasNumber = true;
+								}
+								
+							}
+							else 
+							{
+								if (Character.isDigit(nextChar))
+								{
+									// Is the number zero because then that wouldn't really effect anything 
+									if (nextChar == 0)
+									{
+										lastCharWasNumber = false;
+									}
+									else
+									{
+										lastNumber = nextChar;
+										lastCharWasNumber = true;
+									}
+									
+								}
+								else
+								{
+									answerString = (answerString + nextChar);
+									lastCharWasNumber = false;
+								}
+							}
+						}
+						
+						// Get the new length and set labels to show both old and new length
+						newLength = answerString.length();
+						
+						lblOriginalLength.setText("Original Length: " + originalLength);
+						lblNewLength.setText("New Length: " + newLength);
+						
+						
+						// Show all of the labels that need showing
+						lblAnswer.setVisible(true);
+						lblOriginalLength.setVisible(true);
+						lblNewLength.setVisible(true);
+						
+						// !!!!!!
+						// Show the answer and print output
+						
+						
+						// Name of file I am creating
+						String outputFile = "output.txt";
+						
+						try 
+						{
+							// Things to put in the output file
+							String bytes = answerString;
+							byte[] buffer = bytes.getBytes();
+							
+							FileOutputStream outputStream = 
+								new FileOutputStream(outputFile);
+							
+							// Put the things I want into the output file
+							outputStream.write(buffer);
+							
+							// Close the file
+							outputStream.close();
+							
+							System.out.println("Wrote " + buffer.length + " bytes");
+						}
+						catch(IOException ex) {
+							System.out.println(
+								"Error writing file '"
+								+ outputFile + "'");
+							
+						}
+						
+						// Make the answer show up as a label
+						lblAnswer.setText("Output: " + answerString);
+					}
+					}
+						
 				}
 				
 				
 				
+
 				
-				// Show all of the labels that need showing
-				lblAnswer.setVisible(true);
-				lblOriginalLength.setVisible(true);
-				lblNewLength.setVisible(true);
-			}
+				
 		});
 		btnBlowupString.setBounds(41, 141, 103, 23);
 		frame.getContentPane().add(btnBlowupString);
@@ -247,44 +378,13 @@ public class StringStuff {
 		//JButton btnIntMaxRun = new JButton("Int MaxRun");
 		btnIntMaxRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// Do Int MaxRun
 			}
 		});
 		btnIntMaxRun.setBounds(41, 204, 103, 23);
 		frame.getContentPane().add(btnIntMaxRun);
 		
-		// !!!!!!
-		// Show the answer and print output
 		
-		
-		// Name of file I am creating
-		String outputFile = "output.txt";
-		
-		try 
-		{
-			// Things to put in the output file
-			String bytes = answerString;
-			byte[] buffer = bytes.getBytes();
-			
-			FileOutputStream outputStream = 
-				new FileOutputStream(outputFile);
-			
-			// Put the things I want into the output file
-			outputStream.write(buffer);
-			
-			// Close the file
-			outputStream.close();
-			
-			System.out.println("Wrote " + buffer.length + " bytes");
-		}
-		catch(IOException ex) {
-			System.out.println(
-				"Error writing file '"
-				+ outputFile + "'");
-			
-		}
-		
-		// Make the answer show up as a label
-		lblAnswer.setText("Output: " + answerString);
 		
 	}
 }
