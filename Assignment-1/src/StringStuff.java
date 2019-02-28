@@ -20,7 +20,9 @@ import java.util.regex.Pattern;
  * Created on: 24-Feb-2019
  * Created for: ICS4U
  * Major Assignment – Assignment #1 String Stuff
- * This program ...
+ * This program has you input a string either in a textbox...
+ * ....or through an input file. Then it will do one of two questions...
+ * ...posed by Ms.Raffin to us.
 */
 
 public class StringStuff {
