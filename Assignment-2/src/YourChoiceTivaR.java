@@ -7,6 +7,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/*
+ * Created by: Tiva Rait
+ * Created on: 03-April-2019
+ * Created for: ICS4U
+ * Major Assignment – 2
+ * This program ...
+*/
 public class YourChoiceTivaR {
 
 	private JFrame frame;
@@ -58,10 +65,18 @@ public class YourChoiceTivaR {
 		frame.getContentPane().add(btnWillowWildRide);
 		
 		JButton btnPassOrFail = new JButton("Pass or Fail");
+		btnPassOrFail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnPassOrFail.setBounds(229, 74, 195, 23);
 		frame.getContentPane().add(btnPassOrFail);
 		
 		JButton btnMartianTime = new JButton("Martian Time");
+		btnMartianTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnMartianTime.setBounds(118, 124, 195, 23);
 		frame.getContentPane().add(btnMartianTime);
 		
