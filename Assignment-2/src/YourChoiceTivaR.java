@@ -6,6 +6,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.*;
 
 /*
  * Created by: Tiva Rait
@@ -59,6 +60,88 @@ public class YourChoiceTivaR {
 		btnWillowWildRide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				// Declare Variables
+				// Step one
+				int daysCatPlays;
+				int daysCollectingBoxes;
+				int totalDaysOfWork;
+				int boxesCollected;
+				int currentDay;
+				
+				
+				// Get Input from File
+				// Step two
+
+				// The name of the file to open.
+		        String InputfileName = "temp.txt";
+
+		        // This will reference one line at a time
+		        String line = null;
+
+		        try {
+		            // FileReader reads text files in the default encoding.
+		            FileReader fileReader = 
+		                new FileReader(InputfileName);
+
+		            // Always wrap FileReader in BufferedReader.
+		            BufferedReader bufferedReader = 
+		                new BufferedReader(fileReader);
+
+		            while((line = bufferedReader.readLine()) != null) {
+		                System.out.println(line);
+		            }   
+
+		            // Always close files.
+		            bufferedReader.close();         
+		        }
+		        catch(FileNotFoundException ex) {
+		            System.out.println(
+		                "Unable to open file '" + 
+		                InputfileName + "'");                
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error reading file '" 
+		                + InputfileName + "'");                  
+		            // Or we could just do this: 
+		            // ex.printStackTrace();
+		        }
+				
+				// Calculations 
+				// Step three
+				
+				// Output to txt file 
+				// Step four
+				
+		        String OutputfileName = "InputWillowWildRide.txt";
+
+		        try {
+		            // Assume default encoding.
+		            FileWriter fileWriter =
+		                new FileWriter(OutputfileName);
+
+		            // Always wrap FileWriter in BufferedWriter.
+		            BufferedWriter bufferedWriter =
+		                new BufferedWriter(fileWriter);
+
+		            // Note that write() does not automatically
+		            // append a newline character.
+		            bufferedWriter.write("Hello there,");
+		            bufferedWriter.newLine();
+		            bufferedWriter.write("We are writing");
+
+		            // Always close files.
+		            bufferedWriter.close();
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error writing to file '"
+		                + OutputfileName + "'");
+		            // Or we could just do this:
+		            // ex.printStackTrace();
+		        }
+				
+
 			}
 		});
 		btnWillowWildRide.setBounds(10, 74, 195, 23);
@@ -80,8 +163,7 @@ public class YourChoiceTivaR {
 		btnMartianTime.setBounds(118, 124, 195, 23);
 		frame.getContentPane().add(btnMartianTime);
 		
-		// Procedure
-		//
+		
 	}
 
 }
