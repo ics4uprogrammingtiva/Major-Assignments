@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.util.ArrayList;
 
 /*
  * Created by: Tiva Rait
@@ -68,12 +69,23 @@ public class YourChoiceTivaR {
 				int boxesCollected;
 				int currentDay;
 				
+				int Numcases = 10;
+				int lineCounter = 0;
+				boolean hasBox = false;
+				
+				ArrayList <String> Input = new ArrayList <String>();
+				
+				// Important final answer 
+				int daysDelayed = 0;
+				
+				// Get the things put into text file
+				String inputString = "Fail";
 				
 				// Get Input from File
 				// Step two
-
+				
 				// The name of the file to open.
-		        String InputfileName = "temp.txt";
+		        String InputfileName = "InputWillowWildRide.txt";
 
 		        // This will reference one line at a time
 		        String line = null;
@@ -89,6 +101,8 @@ public class YourChoiceTivaR {
 
 		            while((line = bufferedReader.readLine()) != null) {
 		                System.out.println(line);
+		                Input.add(line);
+		                
 		            }   
 
 		            // Always close files.
@@ -106,14 +120,34 @@ public class YourChoiceTivaR {
 		            // Or we could just do this: 
 		            // ex.printStackTrace();
 		        }
+		        
+		        // Thanks Allison for helping explain this to me
+		        // Cycle through test cases
+		        for(int i = 0; i < Numcases; i++) 
+		        {
+		        	String [] firstLine = Input.get(lineCounter).split(" ");
+					daysCatPlays = Integer.parseInt(firstLine[0]);
+					daysCollectingBoxes = Integer.parseInt(firstLine[1]);
+					
+					// Possible place for logical error
+					for (currentDay = 1; currentDay <= daysCollectingBoxes; currentDay++)
+					{
+						//////////////
+						// Continue from here
+					}
+						
+					
+					
+					
+					//at very end
+					//increment linecounter
+					lineCounter= lineCounter + 1 + daysCollectingBoxes; 
+		        }
 				
-				// Calculations 
-				// Step three
 				
 				// Output to txt file 
-				// Step four
 				
-		        String OutputfileName = "InputWillowWildRide.txt";
+		        String OutputfileName = "OutputWillowWildRide.txt";
 
 		        try {
 		            // Assume default encoding.
@@ -126,9 +160,9 @@ public class YourChoiceTivaR {
 
 		            // Note that write() does not automatically
 		            // append a newline character.
-		            bufferedWriter.write("Hello there,");
+		            bufferedWriter.write(inputString);
 		            bufferedWriter.newLine();
-		            bufferedWriter.write("We are writing");
+		            bufferedWriter.write("Working?");
 
 		            // Always close files.
 		            bufferedWriter.close();
