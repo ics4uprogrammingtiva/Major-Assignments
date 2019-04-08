@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * Created by: Tiva Rait
  * Created on: 03-April-2019
  * Created for: ICS4U
- * Major Assignment – 2
- * This program is three programs in one
+ * Major Assignment – 2 Your Choice
+ * This program is three problems in one
 */
 public class YourChoiceTivaR {
 
@@ -75,7 +75,7 @@ public class YourChoiceTivaR {
 				// Did she get a box or not?
 				char cameHomeWith;
 				
-				int Numcases = 3;
+				int Numcases = 10;
 				int lineCounter = 0;
 				boolean hasBox = false;
 				
@@ -150,9 +150,6 @@ public class YourChoiceTivaR {
 					// Possible place for logical error
 					for (currentDay = 1; currentDay <= daysCollectingBoxes; currentDay++)
 					{
-						
-						//////////////
-						// Continue from here
 						cameHomeWith = Input.get(currentLine).charAt(0);
 						System.out.println("cameHomeWith " + cameHomeWith);
 						
@@ -204,11 +201,6 @@ public class YourChoiceTivaR {
 						currentLine = (currentLine +1);
 						
 						totalDaysOfWork = (totalDaysOfWork + 1);
-						// Testing purposes
-						System.out.println("daysDelayed " + daysDelayed);
-						// Testing purposes
-						System.out.println("totaldaysOfWork " + totalDaysOfWork);
-						System.out.println("boxes Collected " + boxesCollected);
 					}
 					
 					
@@ -225,7 +217,8 @@ public class YourChoiceTivaR {
 					}
 					
 					// Put answers into an array
-					Answers[i] = (daysDelayed + " " + totalDaysOfWork + " " + boxesCollected);
+					Answers[i] = ("Days project was delayed: " + daysDelayed + ", Total days of work: " +
+					totalDaysOfWork + ", Num of boxes collected: " + boxesCollected);
 					
 					
 					//at very end
@@ -284,6 +277,12 @@ public class YourChoiceTivaR {
 				double projectWeight;
 				double quizWeight;
 				
+				//Students mark
+				double testMark;
+				double assignmentMark;
+				double projectMark;
+				double quizMark;
+				
 				
 				// Outputs
 				int numStudentsPassing;
@@ -294,13 +293,13 @@ public class YourChoiceTivaR {
 				
 				// Variables to help with solving the problem
 				// Number of datasets we have
-				int Numcases = 1;
+				int Numcases = 10;
 				// Input I get
 				int numStudents;
 				// For figuring out what is the current line overall
 				int currentLine;
 				// For figuring out which line is where we get our weights from
-				int lineCounter = 0;
+				int lineCounter = -1;
 				//For figuring out which student we are currently evaluating
 				int currentStudent;
 				// To figure out what the students average is 
@@ -357,30 +356,110 @@ public class YourChoiceTivaR {
 		        // Start looping though data sets
 		        for(int i = 0; i < Numcases; i++)
 		        {
+		        	lineCounter = (lineCounter +1);
 		        	String [] firstLine = Input.get(lineCounter).split(" ");
 					testWeight = Integer.parseInt(firstLine[0]);
 					assignmentWeight = Integer.parseInt(firstLine[1]);
 					projectWeight = Integer.parseInt(firstLine[2]);
 					quizWeight = Integer.parseInt(firstLine[3]);
-					
+
 					//To get number of students
+					// Problem is here!!!!!!!!
 					lineCounter = (lineCounter + 1);
 					numStudents = Integer.parseInt(Input.get(lineCounter));
 					
 					// Set all of the outputs back to their original numbers so they don't get mixed up
+					numStudentsPassing = 0;
+					highestClassMark = 0;
+					lowestClassMark = 101;
+					classAverage = 0;
+					numOfHonourStudents = 0;
+					// To cycle through each dataset
 					for (currentStudent = 1; currentStudent <= numStudents; currentStudent++)
 					{
 						individAverage = 0;
 						// Continue from here
+						lineCounter = (lineCounter + 1);
 						
-						String [] firstLine = Input.get(lineCounter).split(" ");
+						String [] StudentMarks = Input.get(lineCounter).split(" ");
+						testMark = Double.parseDouble(StudentMarks[0]);
+						assignmentMark = Double.parseDouble(StudentMarks[1]);
+						projectMark = Double.parseDouble(StudentMarks[2]);
+						quizMark = Double.parseDouble(StudentMarks[3]);
+						System.out.println(" Line counter :" + lineCounter);
 						
+						// Calculate the individual average
+						individAverage = (individAverage + (testMark * (testWeight/100)));
+						individAverage = (individAverage + (assignmentMark * (assignmentWeight/100)));
+						individAverage = (individAverage + (projectMark * (projectWeight/100)));
+						individAverage = (individAverage + (quizMark * (quizWeight/100)));
+						
+						// To determine the outputs I added
+						if (individAverage < lowestClassMark)
+						{
+							lowestClassMark = individAverage;
+						}
+						
+						if (individAverage > highestClassMark)
+						{
+							highestClassMark = individAverage;
+						}
+						
+						if (individAverage >= 50)
+						{
+							numStudentsPassing = (numStudentsPassing + 1);
+							
+						}
+						
+						if (individAverage >= 80)
+						{
+							numOfHonourStudents = (numOfHonourStudents + 1);
+						}
+						
+						classAverage = classAverage + individAverage;
 					}
+					
+					classAverage = (classAverage/numStudents);
+					
+					Answers[i] = ("Number of Students Passing: " + numStudentsPassing + ", Class Average: " + classAverage +
+							", Highest Mark: " + highestClassMark + ", Lowest Mark: " + lowestClassMark +
+							", Number of Honour Roll Students: " + numOfHonourStudents);
 					
 		        }
 				
 				// Step four
 				//Output
+		        
+		        // Output to txt file 
+				
+		        String OutputfileName = "OutputPassOrFail.txt";
+
+		        try {
+		            // Assume default encoding.
+		            FileWriter fileWriter =
+		                new FileWriter(OutputfileName);
+
+		            // Always wrap FileWriter in BufferedWriter.
+		            BufferedWriter bufferedWriter =
+		                new BufferedWriter(fileWriter);
+
+		            // Note that write() does not automatically
+		            // append a newline character.
+		            for (int printAnswerTimes = 0; printAnswerTimes <= Numcases - 1; printAnswerTimes++)
+		            {
+		            	bufferedWriter.newLine();
+			            bufferedWriter.write(Answers[printAnswerTimes]);
+		            }
+		            
+
+		            // Always close files.
+		            bufferedWriter.close();
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error writing to file '"
+		                + OutputfileName + "'");
+		        }
 			}
 		});
 		btnPassOrFail.setBounds(229, 74, 195, 23);
@@ -389,6 +468,160 @@ public class YourChoiceTivaR {
 		JButton btnMartianTime = new JButton("Martian Time");
 		btnMartianTime.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Step One
+				// Variables
+				double SECONDSEARTHDAY = 86400;
+				double SECONDSMARSDAY = 88642.663;
+				double RATIOOFEARTHTOMARS = (SECONDSEARTHDAY/SECONDSMARSDAY);
+				System.out.println("Ratio of earth to Mars " + RATIOOFEARTHTOMARS);
+				
+				// Earth variables
+				double earthDays = 0;
+				double earthHours = 0;
+				double earthMinutes = 0;
+				double earthSeconds = 0;
+				
+				double totalEarthSeconds = 0;
+				
+				// Mars Variables
+				int marsDays = 0;
+				int marsHours = 0;
+				int marsMinutes = 0;
+				int marsSeconds = 0;
+				
+				double updatedDays = 0;
+				double updatedHours = 0;
+				double updatedMinutes = 0;
+				double updatedSeconds = 0;
+				
+				double totalMarsDays = 0;
+				double totalMarsHours = 0;
+				double totalMarsMinutes = 0;
+				double totalMarsSeconds = 0;
+				
+				
+				// Variables to help me solve the problem
+				// To know how many things in the dataset 
+				int Numcases = 10;
+				// Keep track of current line
+				int lineCounter = 0;
+				
+				// Arrays
+				// Array containing the whole dataset
+				ArrayList <String> Input = new ArrayList <String>();
+				
+				// Array for just the answers to output
+				String Answers[]= new String [Numcases];
+				
+				//! Step Two
+				//get Input
+				
+				// The name of the file to open.
+		        String InputfileName = "InputMartianTime.txt";
+
+		        // This will reference one line at a time
+		        String line = null;
+
+		        try {
+		            // FileReader reads text files in the default encoding.
+		            FileReader fileReader = 
+		                new FileReader(InputfileName);
+
+		            // Always wrap FileReader in BufferedReader.
+		            BufferedReader bufferedReader = 
+		                new BufferedReader(fileReader);
+
+		            while((line = bufferedReader.readLine()) != null) {
+		                System.out.println(line);
+		                Input.add(line);
+		                
+		            }   
+
+		            // Always close files.
+		            bufferedReader.close();         
+		        }
+		        catch(FileNotFoundException ex) {
+		            System.out.println(
+		                "Unable to open file '" + 
+		                InputfileName + "'");                
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error reading file '" 
+		                + InputfileName + "'");                  
+		            // Or we could just do this: 
+		            // ex.printStackTrace();
+		        }
+		        
+				// Step Three 
+				// Calculations
+		        for(int i = 0; i < Numcases; i++)
+		        {
+		        	// Put all of the input into its own variable
+		        	String [] currentLine = Input.get(lineCounter).split(" ");
+		        	earthDays = Double.parseDouble(currentLine[0]);
+		        	earthHours = Double.parseDouble(currentLine[1]);
+		        	earthMinutes = Double.parseDouble(currentLine[2]);
+		        	
+		        	// Convert earth times to seconds
+		        	earthDays = (earthDays - 1);
+		        	System.out.println("Earth days " + updatedDays);
+		        	updatedHours = ((earthDays * 24)+ earthHours);
+		        	updatedMinutes = ((updatedHours*60)+ earthMinutes);
+		        	updatedSeconds = (updatedMinutes*60);
+		        	
+		        	// Convert it to mars times
+		        	totalMarsSeconds = (updatedSeconds * RATIOOFEARTHTOMARS);
+		        	System.out.println("Total marsSeconds" +totalMarsSeconds);
+		        	totalMarsMinutes = (totalMarsSeconds/60);
+		        	System.out.println("totalMarsMinutes " + totalMarsMinutes);
+		        	totalMarsHours = Math.floor(totalMarsMinutes/60);
+		        	totalMarsDays = Math.floor(totalMarsHours/24);
+		        	
+		        	// Figure out how much of everything there is
+		        	marsDays = (int)(totalMarsDays +1);
+		        	
+		        	marsHours = (int)(totalMarsHours%24);
+		        	marsMinutes = (int) (totalMarsMinutes%60);
+		        	
+		        	// Put answer into the Answer Array
+		        	Answers [i] = ("Day " + marsDays + ", " + marsHours + ":" + marsMinutes);
+		        	
+		        	lineCounter = lineCounter +1;
+		        }
+				// Step four
+				// Output 
+		        
+		        // Output to txt file 
+				
+		        String OutputfileName = "OutputMartianTime.txt";
+
+		        try {
+		            // Assume default encoding.
+		            FileWriter fileWriter =
+		                new FileWriter(OutputfileName);
+
+		            // Always wrap FileWriter in BufferedWriter.
+		            BufferedWriter bufferedWriter =
+		                new BufferedWriter(fileWriter);
+
+		            // Note that write() does not automatically
+		            // append a newline character.
+		            for (int printAnswerTimes = 0; printAnswerTimes <= Numcases - 1; printAnswerTimes++)
+		            {
+		            	bufferedWriter.newLine();
+			            bufferedWriter.write(Answers[printAnswerTimes]);
+		            }
+		            
+
+		            // Always close files.
+		            bufferedWriter.close();
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error writing to file '"
+		                + OutputfileName + "'");
+		        }
 			}
 		});
 		btnMartianTime.setBounds(118, 124, 195, 23);

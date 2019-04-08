@@ -1,4 +1,11 @@
 
-2 7 2
-0 4 1
-2 7 2
+Days project was delayed: 2, Total days of work: 7, Num of boxes collected: 2
+Days project was delayed: 0, Total days of work: 4, Num of boxes collected: 1
+Days project was delayed: 2, Total days of work: 7, Num of boxes collected: 2
+Days project was delayed: 4, Total days of work: 9, Num of boxes collected: 2
+Days project was delayed: 2, Total days of work: 6, Num of boxes collected: 1
+Days project was delayed: 4, Total days of work: 9, Num of boxes collected: 2
+Days project was delayed: 2, Total days of work: 6, Num of boxes collected: 1
+Days project was delayed: 4, Total days of work: 9, Num of boxes collected: 2
+Days project was delayed: 6, Total days of work: 11, Num of boxes collected: 2
+Days project was delayed: 4, Total days of work: 8, Num of boxes collected: 1

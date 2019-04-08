@@ -1,0 +1,11 @@
+
+Number of Students Passing: 4, Class Average: 53.44571428571429, Highest Mark: 70.84, Lowest Mark: 30.04, Number of Honour Roll Students: 0
+Number of Students Passing: 1, Class Average: 43.724999999999994, Highest Mark: 79.94999999999999, Lowest Mark: 7.5, Number of Honour Roll Students: 0
+Number of Students Passing: 1, Class Average: 51.23333333333333, Highest Mark: 98.8, Lowest Mark: 22.5, Number of Honour Roll Students: 1
+Number of Students Passing: 5, Class Average: 55.133333333333326, Highest Mark: 74.16999999999999, Lowest Mark: 14.52, Number of Honour Roll Students: 0
+Number of Students Passing: 4, Class Average: 53.44571428571429, Highest Mark: 70.84, Lowest Mark: 30.04, Number of Honour Roll Students: 0
+Number of Students Passing: 4, Class Average: 53.44571428571429, Highest Mark: 70.84, Lowest Mark: 30.04, Number of Honour Roll Students: 0
+Number of Students Passing: 1, Class Average: 43.724999999999994, Highest Mark: 79.94999999999999, Lowest Mark: 7.5, Number of Honour Roll Students: 0
+Number of Students Passing: 1, Class Average: 51.23333333333333, Highest Mark: 98.8, Lowest Mark: 22.5, Number of Honour Roll Students: 1
+Number of Students Passing: 5, Class Average: 55.133333333333326, Highest Mark: 74.16999999999999, Lowest Mark: 14.52, Number of Honour Roll Students: 0
+Number of Students Passing: 4, Class Average: 53.44571428571429, Highest Mark: 70.84, Lowest Mark: 30.04, Number of Honour Roll Students: 0
