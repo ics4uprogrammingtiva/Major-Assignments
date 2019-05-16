@@ -52,7 +52,7 @@ public class SearchOrWalkTivaR {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 927, 388);
+		frame.setBounds(100, 100, 927, 374);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -69,7 +69,7 @@ public class SearchOrWalkTivaR {
 		frame.getContentPane().add(btnBinarySearch);
 		
 		List lstUnsortedNumbers = new List();
-		lstUnsortedNumbers.setBounds(621, 132, 110, 183);
+		lstUnsortedNumbers.setBounds(621, 132, 110, 164);
 		frame.getContentPane().add(lstUnsortedNumbers);
 		
 		JLabel lblBubbleSUnsortedList = new JLabel("Unsorted Numbers:");
@@ -77,7 +77,7 @@ public class SearchOrWalkTivaR {
 		frame.getContentPane().add(lblBubbleSUnsortedList);
 		
 		List lstSortedNumbers = new List();
-		lstSortedNumbers.setBounds(791, 132, 110, 183);
+		lstSortedNumbers.setBounds(791, 132, 110, 164);
 		frame.getContentPane().add(lstSortedNumbers);
 		
 		JLabel lblBubbleSSortedNumbers = new JLabel("Sorted Numbers:");
@@ -96,7 +96,7 @@ public class SearchOrWalkTivaR {
 		frame.getContentPane().add(lblBubbleSortUserNumber);
 		
 		JLabel lblBubbleSortAnswer = new JLabel("New label");
-		lblBubbleSortAnswer.setBounds(621, 324, 280, 14);
+		lblBubbleSortAnswer.setBounds(621, 302, 280, 14);
 		frame.getContentPane().add(lblBubbleSortAnswer);
 		
 		JButton btnBubbleSort = new JButton("Bubble Sort");
@@ -107,6 +107,13 @@ public class SearchOrWalkTivaR {
 				int MINVALUE = 1;
 				int RANGE = ((MAXVALUE - MINVALUE)+1);
 				int numberOfValues = 10;
+				boolean arraySorted = false;
+				
+				int numbA;
+				int numbB;
+				
+				int valueA;
+				int valueB = 0;
 				
 				// May take this out later 
 				int userNumber;
@@ -114,18 +121,62 @@ public class SearchOrWalkTivaR {
 				// The textBox
 				userNumber = Integer.parseInt(txtBubbleSortUserNumber.getText());
 				
-				// Generate list for the array
+				// Generate numbers for the array
 				int [] unSortedNumbers = new int[numberOfValues];
 				
-				// Loop to get randomly generated list made
+				// Loop to get randomly generated array made
 				for (int randomGenerationIndex = 0; randomGenerationIndex < numberOfValues; randomGenerationIndex++ )
 				{
 					int randomNumber = 0;
 					
 					randomNumber = (int)((Math.random()* RANGE)+ MINVALUE);
 					
-					lstSortedNumbers.add(Integer.toString(randomNumber));
+					lstUnsortedNumbers.add(Integer.toString(randomNumber));
 				}
+				
+				// Make the array sorted = false
+				arraySorted = false;
+				
+				while (arraySorted == false)
+				{
+					numbA = 0;
+					numbB = 1;
+					
+					arraySorted = true;
+					
+					for (numbB = 1;numbB <= numberOfValues;)
+					{
+						// assign the numbers values
+						valueA = unSortedNumbers[numbA];
+						valueB = unSortedNumbers[numbB];
+						
+						// If they are not in order then switch them
+						if (numbA > numbB)
+						{
+							unSortedNumbers[numbA] = valueB;
+							unSortedNumbers[numbB] = valueA;
+							arraySorted = false;
+						}
+						//Part 1
+						// Add value A to the list 
+						lstSortedNumbers.add(Integer.toString(valueA));
+						
+						
+						// increment  both of them
+						numbA++;
+						numbB++;
+						
+					}
+					//Part 2
+					// Add value A to the list 
+					lstSortedNumbers.add(Integer.toString(valueB));
+					
+					// Display the unsorted numbers to the list 
+					
+					
+				}
+				
+				// SEARCH FOR THE NUMBER USER REQUESTED HERE
 				
 			}
 		});
