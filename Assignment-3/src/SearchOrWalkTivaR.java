@@ -64,10 +64,6 @@ public class SearchOrWalkTivaR {
 		btnRandomWalk.setBounds(10, 36, 289, 23);
 		frame.getContentPane().add(btnRandomWalk);
 		
-		JButton btnBinarySearch = new JButton("Binary Search");
-		btnBinarySearch.setBounds(306, 36, 289, 23);
-		frame.getContentPane().add(btnBinarySearch);
-		
 		List lstUnsortedNumbers = new List();
 		lstUnsortedNumbers.setBounds(621, 132, 110, 164);
 		frame.getContentPane().add(lstUnsortedNumbers);
@@ -106,8 +102,9 @@ public class SearchOrWalkTivaR {
 				int MAXVALUE = 99;
 				int MINVALUE = 1;
 				int RANGE = ((MAXVALUE - MINVALUE)+1);
-				int numberOfValues = 10;
+				int numberOfValues = 250;
 				boolean arraySorted = false;
+				boolean foundNumber = false;
 				
 				int numbA;
 				int numbB;
@@ -115,8 +112,9 @@ public class SearchOrWalkTivaR {
 				int valueA;
 				int valueB = 0;
 				
-				// May take this out later 
+				// To find how many instances of this number are in this list
 				int userNumber;
+				int timesInList=0;
 				
 				// The textBox
 				userNumber = Integer.parseInt(txtBubbleSortUserNumber.getText());
@@ -132,6 +130,8 @@ public class SearchOrWalkTivaR {
 					randomNumber = (int)((Math.random()* RANGE)+ MINVALUE);
 					
 					lstUnsortedNumbers.add(Integer.toString(randomNumber));
+					
+					unSortedNumbers[randomGenerationIndex] = randomNumber;
 				}
 				
 				// Make the array sorted = false
@@ -144,19 +144,26 @@ public class SearchOrWalkTivaR {
 					
 					arraySorted = true;
 					
-					for (numbB = 1;numbB <= numberOfValues;)
+					// Empty the list to be sure it doesn't already have something in it
+					lstSortedNumbers.removeAll();
+					
+					for (numbB = 1;numbB <= numberOfValues-1;)
 					{
+						
 						// assign the numbers values
 						valueA = unSortedNumbers[numbA];
 						valueB = unSortedNumbers[numbB];
 						
+						System.out.println(unSortedNumbers[numbA]);
+						
 						// If they are not in order then switch them
-						if (numbA > numbB)
+						if (valueA > valueB)
 						{
 							unSortedNumbers[numbA] = valueB;
 							unSortedNumbers[numbB] = valueA;
 							arraySorted = false;
 						}
+						
 						//Part 1
 						// Add value A to the list 
 						lstSortedNumbers.add(Integer.toString(valueA));
@@ -165,22 +172,63 @@ public class SearchOrWalkTivaR {
 						// increment  both of them
 						numbA++;
 						numbB++;
-						
 					}
+
 					//Part 2
-					// Add value A to the list 
-					lstSortedNumbers.add(Integer.toString(valueB));
-					
-					// Display the unsorted numbers to the list 
+					// Add value B to the list 
+					lstSortedNumbers.add(Integer.toString(valueB)); 
 					
 					
 				}
 				
 				// SEARCH FOR THE NUMBER USER REQUESTED HERE
+				for (int searchIndex = 0; searchIndex < numberOfValues; searchIndex++)
+				{
+					if (unSortedNumbers[searchIndex] == userNumber)
+					{
+						foundNumber = true;
+						timesInList++;
+					}
+					
+				}
+				
+				// If the list couldn't find the number
+				if (foundNumber = false)
+				{
+					lblBubbleSortAnswer.setText("Sorry your number is not in this list");
+				}
+				else
+				{
+					lblBubbleSortAnswer.setText("Your number was found " + timesInList + " times!");
+				}
 				
 			}
 		});
 		btnBubbleSort.setBounds(612, 36, 289, 23);
 		frame.getContentPane().add(btnBubbleSort);
+		
+		JButton btnBinarySearch = new JButton("Binary Search");
+		btnBinarySearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnBinarySearch.setBounds(306, 36, 289, 23);
+		frame.getContentPane().add(btnBinarySearch);
+		
+		List lstRandomList = new List();
+		lstRandomList.setBounds(306, 132, 110, 164);
+		frame.getContentPane().add(lstRandomList);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(306, 302, 46, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		List list = new List();
+		list.setBounds(485, 132, 110, 164);
+		frame.getContentPane().add(list);
+		
+		JLabel lblRandomList = new JLabel("Unsorted Numbers:");
+		lblRandomList.setBounds(306, 112, 110, 14);
+		frame.getContentPane().add(lblRandomList);
 	}
 }
