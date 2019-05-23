@@ -23,6 +23,7 @@ public class SearchOrWalkTivaR {
 
 	private JFrame frame;
 	private JTextField txtBubbleSortUserNumber;
+	private JTextField txtBinarySearchTextbox;
 
 	/**
 	 * Launch the application.
@@ -207,28 +208,139 @@ public class SearchOrWalkTivaR {
 		btnBubbleSort.setBounds(612, 36, 289, 23);
 		frame.getContentPane().add(btnBubbleSort);
 		
+		List lstRandomList = new List();
+		lstRandomList.setBounds(306, 132, 110, 164);
+		frame.getContentPane().add(lstRandomList);
+		
+		JLabel lblBinarySearchAnswer = new JLabel("New label");
+		lblBinarySearchAnswer.setBounds(306, 302, 46, 14);
+		frame.getContentPane().add(lblBinarySearchAnswer);
+		
+		List lstBinarySSortedList = new List();
+		lstBinarySSortedList.setBounds(485, 132, 110, 164);
+		frame.getContentPane().add(lstBinarySSortedList);
+		
+		JLabel lblRandomList = new JLabel("Unsorted Numbers:");
+		lblRandomList.setBounds(306, 112, 110, 14);
+		frame.getContentPane().add(lblRandomList);
+		
+		JLabel lblBinarySearchQuestion = new JLabel("Number to search for?");
+		lblBinarySearchQuestion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBinarySearchQuestion.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblBinarySearchQuestion.setBounds(306, 68, 193, 14);
+		frame.getContentPane().add(lblBinarySearchQuestion);
+		
+		txtBinarySearchTextbox = new JTextField();
+		txtBinarySearchTextbox.setColumns(10);
+		txtBinarySearchTextbox.setBounds(509, 65, 86, 20);
+		frame.getContentPane().add(txtBinarySearchTextbox);
+		
+		JLabel lblSortedList = new JLabel("Sorted Numbers:");
+		lblSortedList.setBounds(485, 112, 110, 14);
+		frame.getContentPane().add(lblSortedList);
+		
 		JButton btnBinarySearch = new JButton("Binary Search");
 		btnBinarySearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Variables
+				int MAXVALUE = 99;
+				int MINVALUE = 1;
+				int RANGE = ((MAXVALUE - MINVALUE)+1);
+				int numberOfValues = 10;
+				int userNumber;
+				boolean arraySorted;
+				
+				int numbA;
+				int numbB;
+				int valueA;
+				int valueB = 0;
+				
+				// Variables for the Binary Search part
+				int smallestInIndex = 0;
+				int largestInIndex = numberOfValues;
+				int middleInIndex;
+				boolean foundNumber = false;
+				
+				//Get the number the user want to use
+				userNumber = Integer.parseInt(txtBinarySearchTextbox.getText());
+				
+				// Generate numbers for the array
+				int [] unSortedNumbers = new int[numberOfValues];
+				
+				// Loop to get randomly generated array made
+				for (int randomGenerationIndex = 0; randomGenerationIndex < numberOfValues; randomGenerationIndex++ )
+				{
+					int randomNumber = 0;
+					
+					randomNumber = (int)((Math.random()* RANGE)+ MINVALUE);
+					
+					lstRandomList.add(Integer.toString(randomNumber));
+					
+					unSortedNumbers[randomGenerationIndex] = randomNumber;
+				}
+				
+				// Sort that list using Bubble sort method
+				
+				// Make the array sorted = false
+				arraySorted = false;
+				
+				while (arraySorted == false)
+				{
+					numbA = 0;
+					numbB = 1;
+					
+					arraySorted = true;
+					
+					// Empty the list to be sure it doesn't already have something in it
+					lstBinarySSortedList.removeAll();
+					
+					for (numbB = 1;numbB <= numberOfValues-1;)
+					{
+						
+						// assign the numbers values
+						valueA = unSortedNumbers[numbA];
+						valueB = unSortedNumbers[numbB];
+						
+						System.out.println(unSortedNumbers[numbA]);
+						
+						// If they are not in order then switch them
+						if (valueA > valueB)
+						{
+							unSortedNumbers[numbA] = valueB;
+							unSortedNumbers[numbB] = valueA;
+							arraySorted = false;
+						}
+						
+						//Part 1
+						// Add value A to the list 
+						lstBinarySSortedList.add(Integer.toString(valueA));
+						
+						
+						// increment  both of them
+						numbA++;
+						numbB++;
+					}
+
+					//Part 2
+					// Add value B to the list 
+					lstBinarySSortedList.add(Integer.toString(valueB)); 
+					
+					
+				}
+				
+				// Time to do the binary search
+				foundNumber = false;
+				
+				//while (foundNumber == false)
+				//{
+					middleInIndex = (largestInIndex /2);
+					
+					System.out.println("largestInIndex");
+				//}
 			}
 		});
 		btnBinarySearch.setBounds(306, 36, 289, 23);
 		frame.getContentPane().add(btnBinarySearch);
 		
-		List lstRandomList = new List();
-		lstRandomList.setBounds(306, 132, 110, 164);
-		frame.getContentPane().add(lstRandomList);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(306, 302, 46, 14);
-		frame.getContentPane().add(lblNewLabel);
-		
-		List list = new List();
-		list.setBounds(485, 132, 110, 164);
-		frame.getContentPane().add(list);
-		
-		JLabel lblRandomList = new JLabel("Unsorted Numbers:");
-		lblRandomList.setBounds(306, 112, 110, 14);
-		frame.getContentPane().add(lblRandomList);
 	}
 }
