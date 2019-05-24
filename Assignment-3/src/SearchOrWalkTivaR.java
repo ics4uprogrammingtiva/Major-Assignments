@@ -213,7 +213,7 @@ public class SearchOrWalkTivaR {
 		frame.getContentPane().add(lstRandomList);
 		
 		JLabel lblBinarySearchAnswer = new JLabel("New label");
-		lblBinarySearchAnswer.setBounds(306, 302, 46, 14);
+		lblBinarySearchAnswer.setBounds(306, 302, 289, 14);
 		frame.getContentPane().add(lblBinarySearchAnswer);
 		
 		List lstBinarySSortedList = new List();
@@ -249,6 +249,7 @@ public class SearchOrWalkTivaR {
 				int numberOfValues = 10;
 				int userNumber;
 				boolean arraySorted;
+				int indexAnswer = 0;
 				
 				int numbA;
 				int numbB;
@@ -331,12 +332,44 @@ public class SearchOrWalkTivaR {
 				// Time to do the binary search
 				foundNumber = false;
 				
-				//while (foundNumber == false)
-				//{
+				// To find the original middle in index
+				middleInIndex = (largestInIndex /2);
+				
+				// Loop until the number is found
+				while (foundNumber != true)
+				{
 					middleInIndex = (largestInIndex /2);
+						
+					// If the middle number is the answer
+					if (unSortedNumbers[middleInIndex] == userNumber)
+					{
+							indexAnswer = middleInIndex;
+							foundNumber = true;
+					}
+					else if (unSortedNumbers[middleInIndex] > userNumber)
+					{
+							largestInIndex = middleInIndex;
+							
+							// Find the new middle of the index
+							middleInIndex = ((smallestInIndex + largestInIndex)/ 2);
+					}
+					else if (unSortedNumbers[middleInIndex] < userNumber)
+					{
+						smallestInIndex = middleInIndex;
+						
+						// Find the new middle of the index
+						middleInIndex = ((smallestInIndex + largestInIndex)/ 2);
+					}
+					else
+					{
+						middleInIndex = middleInIndex +1;
+					}
 					
-					System.out.println("largestInIndex");
-				//}
+					
+				}
+				
+				// Display the index answer
+				lblBinarySearchAnswer.setText("The index your numer is at is " + indexAnswer);
 			}
 		});
 		btnBinarySearch.setBounds(306, 36, 289, 23);
